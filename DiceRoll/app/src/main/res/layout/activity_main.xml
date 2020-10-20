@@ -8,17 +8,15 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
-    <TextView
-        android:id="@+id/rollText"
+    <ImageView
+        android:id="@+id/diceImage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello Kotlin!"
-        android:textSize="30sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
+        android:src="@drawable/empty_dice"
+        app:srcCompat="@drawable/empty_dice"
+        tools:src="@drawable/dice_1"/>
+        <!--srcCompat is used to support Vectors images in older version of Android.
+        "app" name space is used for supporting older versions-->
     <Button
         android:id="@+id/rollBtn"
         android:layout_width="wrap_content"
