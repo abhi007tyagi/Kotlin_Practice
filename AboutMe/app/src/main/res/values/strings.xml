@@ -1,0 +1,35 @@
+<resources>
+    <string name="app_name">AboutMe</string>
+    <string name="name_text">Abhinav Tyagi</string>
+    <string name="yellow_star">Yellow Star</string>
+    <string name="bioText">I a am self-taught, multi-talented, innovative, and self-motivated
+        professional and possesses self-discipline and have a track record of working as a
+        team player in an international environment with minimum supervision. I seek perfection
+        in my work and able to play a key role throughout the application development lifecycle to
+        ensure that quality solutions meet business objectives.\n\nI was admitted to a B.Tech(ECE)
+        program by securing a rank of 329 out of 60,000+ applicants in a common entrance exam.
+        Through campus, I received placement in CSC (Fortune 300 - now DXC Technologies) and worked
+        as a contractor for Sun Microsystems and later Oracle (both Fortune 100) and became
+        Sun Certified Java Programmer. As a hobby, I developed Blackberry apps and earned numerous
+        rewards - 4 devices &amp; $1000+ from Blackberry. At CSC, I assisted in setting up a Mobile
+        Center of Excellence, which was 1st CoE opened outside the US. Here, I gained mobility
+        skills and developed 30+ android based apps and proof of concepts.\n\nI joined Genpact after
+        working 5+ years at CSC. Here, I am working as a contractor for CVS Health (Fortune 7) with
+        digital innovation lab and developed Google Assistant app and integrating Dialogflow based
+        Chatbot to Android and iOS apps. I have been awarded a Shining Star Award for being a
+        consistently high performer (rated #1) for two consecutive years.  I am an independent
+        contributor and mostly engaged in research-based work for clients. I explore and learn how
+        to integrate new features and APIs to mobile applications and digital systems. I enjoy
+        sharing knowledge with the developer community through GDG or social media. I was the 3rd
+        person in the world to get Android Certification from Google.
+
+        Self-learning story by Udacity - https://goo.gl/1OoAnw
+        Interview by AppAchhi - https://goo.gl/cCtdmb Talk at
+        Google I/O extended - https://goo.gl/dcSsgp Research profiled at
+        Google I/O - http://goo.gl/934W2U
+        GitHub: https://github.com/abhi007tyagi
+        Website - https://tyagiabhinav.com Resume - https://goo.gl/wt1JQ5
+        Plum - https://secure.plum.io/p/NUUCw5zYycBW-TesaDjk3A </string>
+    <string name="nickNameHint">what is your nick name?</string>
+    <string name="done">Done!</string>
+</resources>
