@@ -11,11 +11,13 @@ import com.tyagiabhinav.aboutme.databinding.ActivityMainBinding
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
+    // Instance of MyName data class.
+    private val myName: MyName = MyName("Abhinav Tyagi")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
-
+        binding.myName = myName
         binding.doneBtn.setOnClickListener {
             onNicknameEntered(it)
         }
@@ -25,7 +27,7 @@ class MainActivity : AppCompatActivity() {
     private fun onNicknameEntered(view: View) {
         // apply allows us to access views without repeatedly using "binding." like binding.doneBtn
         binding.apply {
-            nickNameText.text = binding.nickNameEditText.text
+            myName?.nickName = nickNameEditText.text.toString()
             invalidateAll() // used to refresh binding with new UI data
             doneBtn.visibility = View.GONE
             nickNameEditText.visibility = View.GONE
