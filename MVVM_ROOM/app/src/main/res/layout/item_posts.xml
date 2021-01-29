@@ -36,9 +36,7 @@
     </RelativeLayout>
 
     <data>
-
         <import type="android.view.View" />
-
         <variable
             name="posts"
             type="com.tyagiabhinav.loremipsum.model.db.Posts" />
