@@ -25,6 +25,14 @@ public class PostsViewModel extends AndroidViewModel {
         return allPosts;
     }
 
+    public void setVisibilityState(int pos, boolean isVisible){
+        allPosts.getValue().get(pos).setDescVisible(isVisible);
+    }
+
+    public boolean isVisible(int pos){
+        return allPosts.getValue().get(pos).isDescVisible();
+    }
+
     /*
     insert, update, delete also goes here if data is being changed by the user
      */

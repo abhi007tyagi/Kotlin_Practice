@@ -1,28 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_margin="2dp">
 
-    <TextView
-        android:id="@+id/description"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/title"
-        android:layout_margin="8dp"
-        android:textSize="14sp"
-        tools:text="This is an answer provided by the creator to test the UI layout" />
+        android:layout_margin="2dp">
 
+        <TextView
+            android:id="@+id/description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/title"
+            android:layout_margin="8dp"
+            android:text="@{posts.desc}"
+            android:textSize="14sp"
+            android:visibility="@{(posts.isDescVisible()) ? View.VISIBLE : View.GONE}"
+            tools:text="This is an answer provided by the creator to test the UI layout" />
 
-    <TextView
-        android:id="@+id/title"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_margin="2dp"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        tools:text="This is a question" />
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_margin="2dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:onClick="@{()-> posts.setDescVisible(!posts.isDescVisible())}"
+            android:text="@{posts.title}"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            tools:text="This is a question" />
 
-</RelativeLayout>
+    </RelativeLayout>
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="posts"
+            type="com.tyagiabhinav.loremipsum.model.db.Posts" />
+
+    </data>
+
+</layout>

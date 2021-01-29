@@ -8,10 +8,10 @@ import androidx.room.PrimaryKey;
 public class Posts {
     @PrimaryKey(autoGenerate = true)
     private int id;
-    private String title;
-    private String desc;
+    private final String title;
+    private final String desc;
     @Ignore
-    private boolean isDescVisible = false;
+    private boolean descVisible;
 
     public Posts(String title, String desc) {
         this.title = title;
@@ -34,13 +34,23 @@ public class Posts {
         return desc;
     }
 
-    public boolean isDescVisible() {
-        return isDescVisible;
+    public void setDescVisible(boolean  descVisible) {
+        this.descVisible = descVisible;
     }
 
-    public void setDescVisible(boolean descVisible) {
-        isDescVisible = descVisible;
+    public boolean isDescVisible() {
+        return descVisible;
     }
+
+
+//    @Bindable
+//    public ObservableBoolean isDescVisible() {
+//        return descVisible;
+//    }
+//
+//    public void setDescVisible(ObservableBoolean  descVisible) {
+//        this.descVisible = descVisible;
+//    }
 }
 
 
