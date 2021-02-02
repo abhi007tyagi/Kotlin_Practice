@@ -16,7 +16,7 @@
             android:layout_margin="8dp"
             android:text="@{posts.desc}"
             android:textSize="14sp"
-            android:visibility="@{(posts.isDescVisible()) ? View.VISIBLE : View.GONE}"
+            android:visibility="@{(posts.descVisible) ? View.VISIBLE : View.GONE}"
             tools:text="This is an answer provided by the creator to test the UI layout" />
 
         <TextView
