@@ -21,7 +21,7 @@ public class ListFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_list, container, false);
         RecyclerView recyclerview = view.findViewById(R.id.postList);
         PostsViewModel viewModel = new ViewModelProvider(requireActivity()).get(PostsViewModel.class);
-        viewModel.getAllPosts().observe(requireActivity(), postsList -> {
+        viewModel.getAllPosts().observe(getViewLifecycleOwner(), postsList -> {
             // update UI
             PostsListRecyclerAdapter adapter = new PostsListRecyclerAdapter(postsList);
             recyclerview.setAdapter(adapter);

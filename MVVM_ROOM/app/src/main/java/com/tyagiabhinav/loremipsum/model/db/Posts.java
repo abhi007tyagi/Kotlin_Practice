@@ -1,6 +1,9 @@
 package com.tyagiabhinav.loremipsum.model.db;
 
+import com.tyagiabhinav.loremipsum.BR;
+
 import androidx.databinding.BaseObservable;
+import androidx.databinding.Bindable;
 import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
@@ -10,7 +13,7 @@ public class Posts extends BaseObservable {
     @PrimaryKey(autoGenerate = true)
     private int id;
     private final String title;
-    private final String desc;
+    public final String desc;
     @Ignore
     private boolean descVisible;
 
@@ -35,11 +38,12 @@ public class Posts extends BaseObservable {
         return desc;
     }
 
-    public void setDescVisible(boolean  descVisible) {
+    public void setDescVisible(boolean descVisible) {
         this.descVisible = descVisible;
-        notifyChange();
+        notifyPropertyChanged(BR.descVisible);
     }
 
+    @Bindable
     public boolean isDescVisible() {
         return descVisible;
     }
