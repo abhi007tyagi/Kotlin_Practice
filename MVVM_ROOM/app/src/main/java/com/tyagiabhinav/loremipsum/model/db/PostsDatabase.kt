@@ -1,24 +1,30 @@
-package com.tyagiabhinav.loremipsum.model.db;
+package com.tyagiabhinav.loremipsum.model.db
 
-import android.content.Context;
+import android.content.Context
+import androidx.room.Database
+import androidx.room.Room
+import androidx.room.RoomDatabase
+import com.tyagiabhinav.loremipsum.model.dao.Post
 
-import androidx.room.Database;
-import androidx.room.Room;
-import androidx.room.RoomDatabase;
+@Database(entities = [Post::class], version = 1, exportSchema = false)
+abstract class PostsDatabase : RoomDatabase() {
+    abstract fun postsDao(): PostsDao
 
-@Database(entities = {Posts.class}, version = 1)
-public abstract class PostsDatabase extends RoomDatabase {
-    private static PostsDatabase instance;
+    companion object {
+        @Volatile
+        private var INSTANCE: PostsDatabase? = null
 
-    public abstract PostsDao postsDao();
-
-    public static synchronized PostsDatabase getInstance(Context context) {
-        if(instance == null) {
-            instance = Room.databaseBuilder(context.getApplicationContext(),
-                    PostsDatabase.class, "posts_database")
-                    .fallbackToDestructiveMigration()
-                    .build();
+        fun getDatabase(context: Context): PostsDatabase {
+            return INSTANCE ?: synchronized(this) {
+                val instance = Room.databaseBuilder(
+                        context.applicationContext,
+                        PostsDatabase::class.java,
+                        "posts_database"
+                ).fallbackToDestructiveMigration().build()
+                INSTANCE = instance
+                // return instance
+                instance
+            }
         }
-        return instance;
     }
 }

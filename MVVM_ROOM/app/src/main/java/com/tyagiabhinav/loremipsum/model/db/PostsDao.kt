@@ -1,28 +1,19 @@
-package com.tyagiabhinav.loremipsum.model.db;
+package com.tyagiabhinav.loremipsum.model.db
 
-import java.util.List;
-
-import androidx.lifecycle.LiveData;
-import androidx.room.Dao;
-import androidx.room.Insert;
-import androidx.room.Query;
-import androidx.room.Update;
+import androidx.lifecycle.LiveData
+import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.Query
+import com.tyagiabhinav.loremipsum.model.dao.Post
 
 @Dao
-public interface PostsDao {
-
+interface PostsDao {
     @Insert
-    void insert(List<Posts> posts);
-
-    @Update
-    void update(List<Posts> posts);
+    suspend fun insert(posts: List<Post>)
 
     @Query("DELETE from posts_table")
-    void deleteAll();
+    suspend fun deleteAll()
 
     @Query("SELECT * from posts_table")
-    LiveData<List<Posts>> getPosts();
-
-    @Query("SELECT * from posts_table LIMIT 1")
-    Posts getPost();
+    fun getPosts(): LiveData<List<Post>>
 }

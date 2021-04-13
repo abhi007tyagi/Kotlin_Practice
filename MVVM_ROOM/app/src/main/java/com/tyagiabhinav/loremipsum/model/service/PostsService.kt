@@ -1,32 +1,21 @@
-package com.tyagiabhinav.loremipsum.model.service;
+package com.tyagiabhinav.loremipsum.model.service
 
-import android.content.Context;
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 
-import retrofit2.Call;
-import retrofit2.Retrofit;
-import retrofit2.converter.scalars.ScalarsConverterFactory;
-import retrofit2.http.GET;
+object PostsService {
+    private const val BASE_URL = "https://jsonplaceholder.typicode.com"
 
-
-public class PostsService {
-    private static final String BASE_URL = "https://jsonplaceholder.typicode.com";
-    private static Retrofit instance;
-
-    public static synchronized Retrofit getInstance(Context context) {
-        if(instance == null) {
-            instance = new Retrofit.Builder()
-                    .baseUrl(BASE_URL)
-                    .addConverterFactory(ScalarsConverterFactory.create())
-                    .build();
-        }
-        return instance;
+    private val retrofitBuilder: Retrofit.Builder by lazy {
+        Retrofit.Builder()
+                .baseUrl(BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
     }
 
-    public interface PostsAPI {
-
-        @GET("/posts")
-        Call<String> getPosts();
+    val postsAPi: PostsApi by lazy {
+        retrofitBuilder
+                .build()
+                .create(PostsApi::class.java)
     }
-
 
 }

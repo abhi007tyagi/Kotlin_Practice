@@ -1,55 +1,34 @@
-package com.tyagiabhinav.loremipsum.ui;
+package com.tyagiabhinav.loremipsum.ui
 
-import android.view.LayoutInflater;
-import android.view.ViewGroup;
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
+import com.tyagiabhinav.loremipsum.databinding.ItemPostsBinding
+import com.tyagiabhinav.loremipsum.model.dao.Post
 
-import com.tyagiabhinav.loremipsum.R;
-import com.tyagiabhinav.loremipsum.databinding.ItemPostsBinding;
-import com.tyagiabhinav.loremipsum.model.db.Posts;
+class PostsListRecyclerAdapter(allPosts: List<Post>) : RecyclerView.Adapter<PostsListRecyclerAdapter.PostListsViewHolder>() {
 
-import java.util.List;
+    var posts: List<Post> = allPosts
 
-import androidx.annotation.NonNull;
-import androidx.databinding.DataBindingUtil;
-import androidx.recyclerview.widget.RecyclerView;
-
-public class PostsListRecyclerAdapter extends RecyclerView.Adapter<PostsListRecyclerAdapter.PostListsViewHolder> {
-
-    List<Posts> posts;
-
-    public PostsListRecyclerAdapter(List<Posts> allPosts) {
-        posts = allPosts;
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostListsViewHolder {
+        val inflater: LayoutInflater = LayoutInflater.from(parent.context)
+        val binding: ItemPostsBinding = ItemPostsBinding.inflate(inflater)
+        return PostListsViewHolder(binding)
     }
 
-    @NonNull
-    @Override
-    public PostListsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        ItemPostsBinding binding = DataBindingUtil.inflate(inflater, R.layout.item_posts, parent, false);
-        return new PostListsViewHolder(binding);
+    override fun onBindViewHolder(holder: PostListsViewHolder, position: Int) {
+        holder.bind(posts[position])
     }
 
-    @Override
-    public void onBindViewHolder(@NonNull PostListsViewHolder holder, int position) {
-        holder.bind(posts.get(position));
+    override fun getItemCount(): Int {
+        return posts.size ?: 0
     }
 
-    @Override
-    public int getItemCount() {
-        return posts != null ? posts.size() : 0;
-    }
-
-    class PostListsViewHolder extends RecyclerView.ViewHolder {
-        ItemPostsBinding binding;
-
-        public PostListsViewHolder(@NonNull ItemPostsBinding binding) {
-            super(binding.getRoot());
-            this.binding = binding;
-        }
-
-        public void bind(Posts posts) {
-            this.binding.setPosts(posts);
-            this.binding.executePendingBindings();
+    inner class PostListsViewHolder(var binding: ItemPostsBinding) : RecyclerView.ViewHolder(binding.root) {
+        fun bind(post: Post) {
+            binding.post = post
+            binding.executePendingBindings()
         }
     }
+
 }
