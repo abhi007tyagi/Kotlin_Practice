@@ -1,18 +1,30 @@
 package com.tyagiabhinav.loremipsum.viewmodel
 
 import android.app.Application
+import androidx.databinding.ObservableField
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.liveData
 import com.tyagiabhinav.loremipsum.model.Repository
 import com.tyagiabhinav.loremipsum.model.dao.Post
 
-class PostsViewModel(val app: Application) : AndroidViewModel(app) {
+class PostsViewModel(private val app: Application) : AndroidViewModel(app) {
 
-    fun getPosts(): LiveData<List<Post>> {
-        return Repository.getInstance(app.applicationContext).getPosts()
-    }
+    val dataLoading = ObservableField(false)
 
-    fun cancelJobs() {
-        Repository.getInstance(app.applicationContext).cancelJob()
+    val result: LiveData<List<Post>> = liveData {
+        dataLoading.set(true)
+        try {
+            val res = Repository.getInstance(app.applicationContext).getPosts()
+            if (res.isNotEmpty()) {
+                emit(res)
+            } else {
+                emit(emptyList<Post>())
+            }
+        } catch (ioException: Exception) {
+            emit(emptyList<Post>())
+        } finally {
+            dataLoading.set(false)
+        }
     }
 }
