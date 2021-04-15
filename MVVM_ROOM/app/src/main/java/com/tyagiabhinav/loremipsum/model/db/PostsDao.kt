@@ -1,6 +1,5 @@
 package com.tyagiabhinav.loremipsum.model.db
 
-import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
@@ -15,5 +14,5 @@ interface PostsDao {
     suspend fun deleteAll()
 
     @Query("SELECT * from posts_table")
-    fun getPosts(): LiveData<List<Post>>
+    fun getPosts(): List<Post>
 }

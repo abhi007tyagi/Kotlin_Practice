@@ -7,12 +7,13 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
 import com.tyagiabhinav.loremipsum.model.Repository
 import com.tyagiabhinav.loremipsum.model.dao.Post
+import kotlinx.coroutines.Dispatchers.IO
 
 class PostsViewModel(private val app: Application) : AndroidViewModel(app) {
 
     val dataLoading = ObservableField(false)
 
-    val result: LiveData<List<Post>> = liveData {
+    val result: LiveData<List<Post>> = liveData(IO, 5000) {
         dataLoading.set(true)
         try {
             val res = Repository.getInstance(app.applicationContext).getPosts()
