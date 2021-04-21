@@ -7,17 +7,23 @@ import com.tyagiabhinav.loremipsum.model.db.Posts;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
+import dagger.hilt.android.lifecycle.HiltViewModel;
 
+@HiltViewModel
 public class PostsViewModel extends AndroidViewModel {
 
-    private PostsRepository postsRepository;
-    private LiveData<List<Posts>> allPosts;
-    public PostsViewModel(@NonNull Application application) {
+    PostsRepository postsRepository;
+    private final LiveData<List<Posts>> allPosts;
+
+    @Inject
+    public PostsViewModel(@NonNull Application application, PostsRepository repo) {
         super(application);
-        postsRepository = new PostsRepository(application.getApplicationContext());
+        this.postsRepository = repo;
         allPosts = postsRepository.getPosts();
     }
 

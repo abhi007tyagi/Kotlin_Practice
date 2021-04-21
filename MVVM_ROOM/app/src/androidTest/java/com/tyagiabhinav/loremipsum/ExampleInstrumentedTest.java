@@ -8,7 +8,6 @@ import com.tyagiabhinav.loremipsum.model.db.Posts;
 import com.tyagiabhinav.loremipsum.model.db.PostsDao;
 import com.tyagiabhinav.loremipsum.model.db.PostsDatabase;
 import com.tyagiabhinav.loremipsum.model.service.Parser;
-import com.tyagiabhinav.loremipsum.model.service.PostsService;
 
 import org.junit.After;
 import org.junit.Before;

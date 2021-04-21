@@ -1,16 +1,16 @@
 package com.tyagiabhinav.loremipsum.model;
 
-import android.content.Context;
 import android.util.Log;
 
 import com.tyagiabhinav.loremipsum.model.db.Posts;
 import com.tyagiabhinav.loremipsum.model.db.PostsDao;
-import com.tyagiabhinav.loremipsum.model.db.PostsDatabase;
 import com.tyagiabhinav.loremipsum.model.service.Parser;
-import com.tyagiabhinav.loremipsum.model.service.PostsService;
+import com.tyagiabhinav.loremipsum.model.service.PostsAPI;
 
 import java.util.Arrays;
 import java.util.List;
+
+import javax.inject.Inject;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -22,15 +22,15 @@ public class PostsRepository {
 
     private static final String TAG = PostsRepository.class.getName();
 
-    private PostsDao postsDao;
+    private final PostsDao postsDao;
+    private final PostsAPI postsAPI;
     private Posts testPost;
     private LiveData<List<Posts>> allPosts;
-    private PostsService.PostsAPI postsAPI;
 
-    public PostsRepository (Context context){
-        PostsDatabase postsDatabase = PostsDatabase.getInstance(context);
-        postsDao = postsDatabase.postsDao();
-        postsAPI = PostsService.getInstance(context).create(PostsService.PostsAPI.class);
+    @Inject
+    public PostsRepository (PostsDao postsDao, PostsAPI postsAPI){
+        this.postsDao = postsDao;
+        this.postsAPI = postsAPI;
         fetchPosts();
         allPosts = postsDao.getPosts();
         //testPost = postsDao.getPost();
