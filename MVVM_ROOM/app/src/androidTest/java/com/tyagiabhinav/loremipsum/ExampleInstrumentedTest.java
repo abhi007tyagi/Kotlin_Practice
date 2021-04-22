@@ -1,6 +1,5 @@
 package com.tyagiabhinav.loremipsum;
 
-import android.content.Context;
 import android.util.Log;
 
 import com.tyagiabhinav.loremipsum.model.PostsRepository;
@@ -8,20 +7,23 @@ import com.tyagiabhinav.loremipsum.model.db.Posts;
 import com.tyagiabhinav.loremipsum.model.db.PostsDao;
 import com.tyagiabhinav.loremipsum.model.db.PostsDatabase;
 import com.tyagiabhinav.loremipsum.model.service.Parser;
+import com.tyagiabhinav.loremipsum.model.service.PostsAPI;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
 
-import androidx.room.Room;
-import androidx.test.ext.junit.runners.AndroidJUnit4;
-import androidx.test.platform.app.InstrumentationRegistry;
+import javax.inject.Inject;
+import javax.inject.Named;
+
+import dagger.hilt.android.testing.HiltAndroidRule;
+import dagger.hilt.android.testing.HiltAndroidTest;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -33,38 +35,20 @@ import static org.junit.Assert.assertEquals;
  *
  * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
  */
-@RunWith(AndroidJUnit4.class)
+@HiltAndroidTest
 public class ExampleInstrumentedTest {
-    private Context context;
-    private PostsService.PostsAPI postsAPI;
+    @Inject @Named("test_db") PostsDatabase db;
+    @Inject PostsAPI postsAPI;
+    @Inject PostsRepository repo;
+
     private PostsDao postsDao;
-    private PostsDatabase db;
-    private PostsRepository repo;
 
-//    @Before
-//    public void setup(){
-//        CountDownLatch latch = new CountDownLatch(1);
-//        context = InstrumentationRegistry.getInstrumentation().getTargetContext();
-//        repo = new PostsRepository(context);
-//        latch.countDown();
-//        try {
-//            latch.await();
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
-//    }
-//
-//    @Test
-//    public void checkDatabase(){
-//        assertEquals("sunt aut facere repellat provident occaecati excepturi optio reprehenderit",postsDao.getPost().getTitle());
-//    }
-
+    @Rule
+    public HiltAndroidRule hiltRule = new HiltAndroidRule(this);
 
     @Before
-    public void setup() {
-        context = InstrumentationRegistry.getInstrumentation().getTargetContext();
-        postsAPI = PostsService.getInstance(context).create(PostsService.PostsAPI.class);
-        db = Room.inMemoryDatabaseBuilder(context, PostsDatabase.class).build();
+    public void init() {
+        hiltRule.inject();
         postsDao = db.postsDao();
     }
 

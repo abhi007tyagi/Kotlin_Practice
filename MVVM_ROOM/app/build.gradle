@@ -15,7 +15,7 @@ android {
         versionCode 1
         versionName "1.0"
 
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "com.tyagiabhinav.loremipsum.HiltLoremIpsumTestRunner"
     }
 
     testOptions {
@@ -77,4 +77,14 @@ dependencies {
     androidTestImplementation "androidx.navigation:navigation-testing:$nav_version"
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+
+    // HILT
+    // For Robolectric tests.
+    testImplementation 'com.google.dagger:hilt-android-testing:2.33-beta'
+    // ...with Java.
+    testAnnotationProcessor 'com.google.dagger:hilt-android-compiler:2.33-beta'
+    // For instrumented tests.
+    androidTestImplementation 'com.google.dagger:hilt-android-testing:2.33-beta'
+    // ...with Java.
+    androidTestAnnotationProcessor 'com.google.dagger:hilt-android-compiler:2.33-beta'
 }
