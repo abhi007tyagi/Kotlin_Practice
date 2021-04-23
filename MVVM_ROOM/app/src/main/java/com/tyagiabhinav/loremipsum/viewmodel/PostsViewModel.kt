@@ -7,16 +7,23 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
 import com.tyagiabhinav.loremipsum.model.Repository
 import com.tyagiabhinav.loremipsum.model.dao.Post
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers.IO
+import javax.inject.Inject
 
-class PostsViewModel(private val app: Application) : AndroidViewModel(app) {
+@HiltViewModel
+class PostsViewModel
+@Inject constructor(
+    private val app: Application,
+    private val repo: Repository
+) : AndroidViewModel(app) {
 
     val dataLoading = ObservableField(false)
 
     val result: LiveData<List<Post>> = liveData(IO, 5000) {
         dataLoading.set(true)
         try {
-            val res = Repository.getInstance(app.applicationContext).getPosts()
+            val res = repo.getPosts()
             if (res.isNotEmpty()) {
                 emit(res)
             } else {
