@@ -9,6 +9,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.tyagiabhinav.loremipsum.databinding.FragmentListBinding
+import com.tyagiabhinav.loremipsum.model.dao.ResultState
 import com.tyagiabhinav.loremipsum.viewmodel.PostsViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -18,17 +19,35 @@ class ListFragment : Fragment() {
         // Inflate the layout for this fragment
         val binding = FragmentListBinding.inflate(inflater)
         val viewModel: PostsViewModel = ViewModelProvider(requireActivity()).get(PostsViewModel::class.java)
-        viewModel.result.observe(viewLifecycleOwner, Observer { listOfPost ->
-            // update UI
-            if (listOfPost.isEmpty()) {
-                binding.errorMsg.visibility = View.VISIBLE
-                binding.errorMsg.text = "Some error occurred!"
-            } else {
-                val adapter = PostsListRecyclerAdapter(listOfPost)
-                binding.postList.adapter = adapter
-                binding.postList.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
+        viewModel.result.observe(viewLifecycleOwner, Observer { result ->
+            when (result) {
+//                is ResultState.Loading -> {
+//                    viewModel.dataLoading.set(true)
+//                }
+                is ResultState.Error -> {
+//                    viewModel.dataLoading.set(false)
+                    binding.errorMsg.visibility = View.VISIBLE
+                    binding.errorMsg.text = "Some error occurred!"
+                }
+                is ResultState.Success -> {
+//                    viewModel.dataLoading.set(false)
+                    val adapter = PostsListRecyclerAdapter(result.data)
+                    binding.postList.adapter = adapter
+                    binding.postList.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
+                }
             }
         })
+//        viewModel.result.observe(viewLifecycleOwner, Observer { listOfPost ->
+//            // update UI
+//            if (listOfPost.isEmpty()) {
+//                binding.errorMsg.visibility = View.VISIBLE
+//                binding.errorMsg.text = "Some error occurred!"
+//            } else {
+//                val adapter = PostsListRecyclerAdapter(listOfPost)
+//                binding.postList.adapter = adapter
+//                binding.postList.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
+//            }
+//        })
         binding.vm = viewModel
         return binding.root
     }
