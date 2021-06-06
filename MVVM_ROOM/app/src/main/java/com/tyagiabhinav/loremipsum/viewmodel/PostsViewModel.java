@@ -18,6 +18,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel;
 public class PostsViewModel extends AndroidViewModel {
 
     PostsRepository postsRepository;
+//    private final LiveData<Boolean> isLoading;
     private final LiveData<List<Posts>> allPosts;
 
     @Inject
@@ -29,6 +30,10 @@ public class PostsViewModel extends AndroidViewModel {
 
     public LiveData<List<Posts>> getAllPosts() {
         return allPosts;
+    }
+
+    public LiveData<Boolean> isLoading(){
+        return postsRepository.isLoading();
     }
 
     public void setVisibilityState(int pos, boolean isVisible){

@@ -25,29 +25,34 @@ public class PostsRepository {
     private final PostsDao postsDao;
     private final PostsAPI postsAPI;
     private Posts testPost;
+    private final MutableLiveData<Boolean> isLoading;
     private LiveData<List<Posts>> allPosts;
 
     @Inject
     public PostsRepository (PostsDao postsDao, PostsAPI postsAPI){
         this.postsDao = postsDao;
         this.postsAPI = postsAPI;
+        this.isLoading = new MutableLiveData<>();
         fetchPosts();
         allPosts = postsDao.getPosts();
         //testPost = postsDao.getPost();
     }
 
     private void fetchPosts(){
+        isLoading.postValue(true);
         Call<String> call = postsAPI.getPosts();
         call.enqueue(new Callback<String>() {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
                 Log.d(TAG, "onResponse: "+response.code());
+                isLoading.postValue(false);
                 update(Parser.getPosts(response.body()));
             }
 
             @Override
             public void onFailure(Call<String> call, Throwable t) {
                 Log.e(TAG, "onFailure: "+ t.getMessage());
+                isLoading.postValue(false);
                 update(Arrays.asList(new Posts("Error Occurred","Try again later!!!")));
             }
         });
@@ -92,5 +97,9 @@ public class PostsRepository {
 
     public Posts getTestPost(){
         return testPost;
+    }
+
+    public LiveData<Boolean> isLoading() {
+            return isLoading;
     }
 }
