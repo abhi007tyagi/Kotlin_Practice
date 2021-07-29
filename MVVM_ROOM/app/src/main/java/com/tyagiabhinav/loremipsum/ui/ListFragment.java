@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.tyagiabhinav.loremipsum.R;
 import com.tyagiabhinav.loremipsum.databinding.FragmentListBinding;
 import com.tyagiabhinav.loremipsum.viewmodel.PostsViewModel;
 
@@ -24,10 +25,15 @@ public class ListFragment extends Fragment {
         RecyclerView recyclerview = binding.postList;
         PostsViewModel viewModel = new ViewModelProvider(requireActivity()).get(PostsViewModel.class);
         viewModel.getAllPosts().observe(getViewLifecycleOwner(), postsList -> {
-            // update UI
-            PostsListRecyclerAdapter adapter = new PostsListRecyclerAdapter(postsList);
-            recyclerview.setAdapter(adapter);
-            recyclerview.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
+            if(postsList.isEmpty()){
+                binding.errorMsg.setText(R.string.error_no_data);
+                binding.errorMsg.setVisibility(View.VISIBLE);
+            } else {
+                // update UI
+                PostsListRecyclerAdapter adapter = new PostsListRecyclerAdapter(postsList);
+                recyclerview.setAdapter(adapter);
+                recyclerview.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
+            }
         });
         binding.setVm(viewModel);
         return binding.getRoot();
