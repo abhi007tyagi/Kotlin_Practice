@@ -23,6 +23,9 @@ public class ListFragment extends Fragment {
         // Inflate the layout for this fragment
         FragmentListBinding binding = FragmentListBinding.inflate(inflater);
         RecyclerView recyclerview = binding.postList;
+        PostsListRecyclerAdapter adapter = new PostsListRecyclerAdapter();
+        recyclerview.setAdapter(adapter);
+        recyclerview.addItemDecoration(new DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL));
         PostsViewModel viewModel = new ViewModelProvider(requireActivity()).get(PostsViewModel.class);
         viewModel.getAllPosts().observe(getViewLifecycleOwner(), postsList -> {
             if(postsList.isEmpty()){
@@ -30,9 +33,7 @@ public class ListFragment extends Fragment {
                 binding.errorMsg.setVisibility(View.VISIBLE);
             } else {
                 // update UI
-                PostsListRecyclerAdapter adapter = new PostsListRecyclerAdapter(postsList);
-                recyclerview.setAdapter(adapter);
-                recyclerview.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
+                adapter.setData(postsList);
             }
         });
         binding.setVm(viewModel);

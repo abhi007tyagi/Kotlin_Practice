@@ -1,5 +1,7 @@
 package com.tyagiabhinav.loremipsum.model.db;
 
+import java.util.Objects;
+
 import androidx.databinding.BaseObservable;
 import androidx.databinding.Bindable;
 import androidx.room.Entity;
@@ -44,6 +46,19 @@ public class Posts extends BaseObservable {
     @Bindable
     public boolean isDescVisible() {
         return descVisible;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Posts)) return false;
+        Posts posts = (Posts) o;
+        return id == posts.id && descVisible == posts.descVisible && title.equals(posts.title) && desc.equals(posts.desc);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, title, desc, descVisible);
     }
 }
 

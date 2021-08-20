@@ -11,14 +11,16 @@ import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
+import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class PostsListRecyclerAdapter extends RecyclerView.Adapter<PostsListRecyclerAdapter.PostListsViewHolder> {
 
     List<Posts> posts;
-
-    public PostsListRecyclerAdapter(List<Posts> allPosts) {
-        posts = allPosts;
+    public void setData(List<Posts> newPosts){
+        DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(new PostDiffCallback(posts, newPosts));
+        posts = newPosts;
+        diffResult.dispatchUpdatesTo(this);
     }
 
     @NonNull
@@ -39,7 +41,7 @@ public class PostsListRecyclerAdapter extends RecyclerView.Adapter<PostsListRecy
         return posts != null ? posts.size() : 0;
     }
 
-    class PostListsViewHolder extends RecyclerView.ViewHolder {
+    static class PostListsViewHolder extends RecyclerView.ViewHolder {
         ItemPostsBinding binding;
 
         public PostListsViewHolder(@NonNull ItemPostsBinding binding) {
@@ -50,6 +52,36 @@ public class PostsListRecyclerAdapter extends RecyclerView.Adapter<PostsListRecy
         public void bind(Posts posts) {
             this.binding.setPosts(posts);
             this.binding.executePendingBindings();
+        }
+    }
+
+    static class PostDiffCallback extends DiffUtil.Callback{
+        private final List<Posts> oldList;
+        private final List<Posts> newList;
+
+        PostDiffCallback(List<Posts> oList, List<Posts> nList){
+            oldList = oList;
+            newList = nList;
+        }
+
+        @Override
+        public int getOldListSize() {
+            return oldList.size();
+        }
+
+        @Override
+        public int getNewListSize() {
+            return newList.size();
+        }
+
+        @Override
+        public boolean areItemsTheSame(int oldItemPosition, int newItemPosition) {
+            return oldList.get(oldItemPosition).getId() == newList.get(newItemPosition).getId();
+        }
+
+        @Override
+        public boolean areContentsTheSame(int oldItemPosition, int newItemPosition) {
+            return oldList.get(oldItemPosition).equals(newList.get(newItemPosition));
         }
     }
 }
